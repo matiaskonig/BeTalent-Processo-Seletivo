@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     /**
      * Converte data do formato ISO para o formato brasileiro
      * @param {string} date
-     * @returns {string} 
+     * @returns {string}
      */
     function formatDate(date) {
         const d = new Date(date);
@@ -75,11 +75,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 </td>
             `;
 
-            // Adiciona ambas as linhas à tabela
+            // Adiciona a linha principal à tabela
             tableBody.appendChild(row);
+
             // Função para gerenciar o collapse responsivo
             function handleResponsiveCollapse() {
-                const isMobile = window.innerWidth <= 768; // Define o breakpoint para mobile
+                const isMobile = window.innerWidth <= 768;
 
                 // Remove o collapse anterior se existir
                 const existingCollapse = document.getElementById(rowId);
@@ -90,6 +91,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Adiciona o collapse apenas no mobile
                 if (isMobile) {
                     tableBody.appendChild(collapseRow);
+                    // Reassocia o comportamento de collapse do Bootstrap
+                    const collapseElement = new bootstrap.Collapse(collapseRow, {
+                        toggle: false
+                    });
+                    row.addEventListener("click", () => {
+                        collapseElement.toggle();
+                    });
                 }
             }
 
@@ -109,13 +117,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const tableRows = tableBody.querySelectorAll("tr:not(.collapse)");
         let hasVisibleRows = false;
 
-        // Percorre todas as linhas principais da tabela
         tableRows.forEach(row => {
             const cells = row.querySelectorAll("td h3");
             const collapseRow = document.querySelector(row.getAttribute("data-bs-target"));
             const textContent = Array.from(cells).map(c => c.textContent.toLowerCase()).join(" ");
 
-            // Mostra/esconde as linhas com base no filtro
             if (textContent.includes(filter)) {
                 row.style.display = "";
                 if (collapseRow) collapseRow.style.display = "";
@@ -126,7 +132,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Controla a visibilidade da tabela e mensagem de "sem resultados"
         employeeTable.style.display = hasVisibleRows ? "" : "none";
         noResults.style.display = hasVisibleRows ? "none" : "block";
     }
@@ -138,14 +143,12 @@ document.addEventListener("DOMContentLoaded", () => {
             return response.json();
         })
         .then(data => {
-            // Inicializa a tabela e configura o evento de pesquisa
             createTableRows(data.employees);
             searchInput.addEventListener("input", () => {
                 filterTableRows(searchInput.value.toLowerCase());
             });
         })
         .catch(error => {
-            // Tratamento de erro ao carregar os dados
             console.error("Erro:", error);
             noResults.textContent = "Erro ao carregar os dados dos funcionários";
             noResults.style.display = "block";
