@@ -1,0 +1,395 @@
+/* Definição de variáveis de cores */
+ :root {
+     --blue-primary: #0500FF;
+     --blue-10: #EDEFFB;
+     --black: #1C1C1C;
+     --gray-20: #9E9E9E;
+     --gray-10: #DFDFDF;
+     --gray-05: #F5F5F5;
+     --gray-00: #F0F0F0;
+     --white: #FFFFFF;
+     --font: 'Helvetica Neue', sans-serif;
+ }
+
+ /* ======== Estilos Gerais ======== */
+ body {
+     background-color: var(--gray-00);
+     font-family: var(--font);
+     margin: 0;
+     padding-bottom: 50px;
+ }
+
+ h1 {
+     font-family: var(--font);
+     font-weight: 500;
+     font-size: 20px;
+     padding: 0;
+ }
+
+ h2 {
+     font-family: var(--font);
+     font-weight: 500;
+     font-size: 16px;
+     text-transform: uppercase;
+     margin: 0;
+     padding: 0;
+ }
+
+ h3 {
+     font-family: var(--font);
+     font-weight: 400;
+     font-size: 14px;
+     margin: 0;
+     padding: 0;
+ }
+
+ /* ======== Header ======== */
+ header {
+     max-width: 1024px;
+     height: 60px;
+     background-color: var(--white);
+     box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.5);
+     margin: auto;
+     display: flex;
+     align-items: center;
+ }
+
+ .logo {
+     width: 71px;
+     height: 14px;
+     padding: 10px;
+     margin-left: 21.5px;
+     display: block;
+     box-sizing: content-box;
+     /* Anula box-sizing: border-box para a logo */
+ }
+
+ /* ======== Seção Superior ======== */
+ section {
+     max-width: 960px;
+     height: 112px;
+     margin: auto;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+ }
+
+ .pesquisar {
+     width: 290px;
+     height: 48px;
+     background-color: var(--white);
+     border-radius: 8px;
+     border: 1px solid var(--gray-10);
+     font-family: var(--font);
+     font-size: 14px;
+     padding-left: 20px;
+     color: var(--gray-20);
+     margin-left: auto;
+ }
+
+ .pesquisar::placeholder {
+     font-family: var(--font);
+     font-size: 16px;
+     font-weight: 300;
+     color: var(--gray-20);
+     background-repeat: no-repeat;
+     background-position: right 8px center;
+     padding-right: 25px;
+ }
+
+ .input-wrapper {
+     position: relative;
+     display: inline-block;
+     width: 100%;
+     display: flex
+
+ }
+
+ .input-wrapper::after {
+     content: "🔍";
+     position: absolute;
+     right: 10px;
+     top: 50%;
+     transform: translateY(-50%);
+     color: var(--gray-20);
+     pointer-events: none;
+ }
+
+ /* ======== Tabela ======== */
+ table {
+     border-collapse: collapse;
+     table-layout: fixed;
+     max-width: 960px;
+     margin: auto;
+     border-radius: 8px 8px 0 0;
+     overflow: hidden;
+     background-color: var(--white);
+ }
+
+ th,
+ td {
+     box-sizing: border-box;
+     border-bottom: 2px solid var(--gray-00);
+     height: 49px;
+     text-align: left;
+     vertical-align: middle;
+     padding-left: 8px;
+ }
+
+ th {
+     background-color: var(--blue-primary);
+     color: var(--white);
+     height: 44px;
+ }
+
+ th:first-child {
+     padding-left: 32px;
+ }
+
+ table tr:first-child th {
+     height: 47px;
+ }
+
+ tr {
+     background-color: var(--white);
+ }
+
+ table tr:not(:first-child) td {
+     height: 49px;
+ }
+
+ .foto {
+     border-radius: 50%;
+     width: 34px;
+     height: 34px;
+     object-fit: cover;
+     display: block;
+     margin-left: 32px;
+ }
+
+
+ /* ======== Larguras das Colunas ======== */
+ th:nth-child(1),
+ td:nth-child(1) {
+     width: 122px;
+ }
+
+ th:nth-child(2),
+ td:nth-child(2) {
+     width: 230px;
+ }
+
+ th:nth-child(3),
+ td:nth-child(3) {
+     width: 187px;
+ }
+
+ th:nth-child(4),
+ td:nth-child(4) {
+     width: 217px;
+ }
+
+ th:nth-child(5),
+ td:nth-child(5) {
+     width: 205px;
+ }
+
+
+ /* ======== Mensagem de Não Encontrado ======== */
+ .no-results {
+     display: none;
+     max-width: 960px;
+     margin: 20px auto;
+     text-align: center;
+     font-family: Helvetica, sans-serif;
+     font-size: 16px;
+     color: var(--gray-20);
+     background-color: var(--white);
+     padding: 20px;
+     border-radius: 8px;
+     border: 1px solid var(--gray-10);
+ }
+
+
+ /* ======== Responsivo (até 768px) ======== */
+ @media (max-width: 768px) {
+     header {
+         width: 100%;
+     }
+
+     h1 {
+         width: 100%;
+     }
+
+     section {
+         width: 90%;
+         height: auto;
+         flex-direction: column;
+         align-items: center;
+         padding: 25px 0;
+         margin: 0 auto;
+         gap: 10px;
+     }
+
+     .pesquisar {
+         width: 100%;
+     }
+
+     table {
+         max-width: 90%;
+         display: grid;
+     }
+
+     th:first-child {
+         padding-left: 16px;
+     }
+
+     td:nth-child(1) {
+         justify-content: center;
+     }
+
+     thead th:nth-child(1) {
+         flex: 0 0 70px;
+     }
+
+     td:nth-child(1) {
+         width: 70px;
+     }
+
+     table tr:first-child th {
+         width: 70px;
+         align-content: center;
+     }
+
+     tbody td {
+         display: flex;
+         align-items: center;
+         overflow: hidden;
+         text-overflow: ellipsis;
+         height: 49px;
+     }
+
+
+     /* Tabela para mobile */
+     thead,
+     tr,
+     th,
+     td {
+         display: block;
+     }
+
+     thead {
+         display: flex;
+         background: var(--blue-primary);
+         color: var(--white);
+         font-weight: bold;
+         border-radius: 8px 8px 0 0;
+         font-size: 14px;
+     }
+
+     thead tr {
+         display: flex;
+         width: 100%;
+     }
+
+     thead th {
+         flex: 1;
+         padding: 10px;
+         text-align: left;
+     }
+
+     /* Esconde colunas Cargo, Data, Telefone no cabeçalho */
+     thead th:nth-child(n+3) {
+         display: none;
+     }
+
+
+     tbody tr {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         background: var(--white);
+         border-bottom: 2px solid #eee;
+         cursor: pointer;
+         position: relative;
+     }
+
+
+     tbody td:nth-child(2) {
+         flex: 1;
+         padding-right: 10px;
+     }
+
+     /* Esconde colunas extras por padrão */
+     tbody td:nth-child(n+3) {
+         display: none;
+     }
+
+     .foto {
+         width: 32px;
+         height: 32px;
+         margin: 0;
+     }
+
+     /* Ícone de '+' no final da linha quando o collapse está fechado */
+     tbody tr.row-toggle::after {
+         content: "+";
+         color: var(--blue-primary);
+         font-size: 16px;
+         position: absolute;
+         right: 20px;
+         transition: transform 0.3s ease;
+     }
+
+     /* Ícone de '-' quando o collapse está aberto */
+     tbody tr.row-toggle[aria-expanded="true"]::after {
+         content: "-";
+     }
+
+     tbody tr.row-toggle {
+         position: relative;
+     }
+
+     /* Estilo do conteúdo colapsável */
+     .collapse-content {
+         background-color: var(--gray-05);
+         padding: 16px;
+         border-top: 1px solid var(--gray-10);
+         width: 100%;
+         display: block;
+         min-height: 120px;
+         height: auto;
+         visibility: hidden;
+         opacity: 0;
+         transition: opacity 0.1s ease-in-out;
+     }
+
+     tr.collapse.show .collapse-content {
+         visibility: visible;
+         opacity: 1;
+     }
+
+     .collapse-content h3 {
+         margin: 8px 0;
+         display: block;
+         width: 100%;
+     }
+
+     /* Garante que a célula do colapso use a largura total e altura dinâmica */
+     tr.collapse td {
+         width: 100%;
+         background-color: white;
+         padding: 0;
+         min-height: 100px;
+         text-align: center;
+         display: block;
+         align-content: center;
+     }
+
+
+     /* Estilo da mensagem de não encontrado no mobile */
+     .no-results {
+         width: 90%;
+         margin: 20px auto;
+     }
+ }
