@@ -1,6 +1,5 @@
 // Aguarda o DOM ser totalmente carregado antes de executar o código
 document.addEventListener("DOMContentLoaded", () => {
-    // Obtém referências aos elementos do DOM que serão manipulados
     const searchInput = document.getElementById("pesquisar");
     const tableBody = document.getElementById("employee-table-body");
     const noResults = document.getElementById("no-results");
@@ -41,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function createTableRows(employees) {
         tableBody.innerHTML = "";
         employees.forEach((employee, index) => {
-            // Gera ID único para o elemento collapse
             const rowId = `collapse${index + 1}`;
             const formattedPhone = formatPhone(employee.phone);
             const formattedDate = formatDate(employee.admission_date);
@@ -54,7 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
             row.setAttribute("aria-expanded", "false");
             row.setAttribute("aria-controls", rowId);
 
-            // Popula a linha principal com as informações básicas
             row.innerHTML = `
                 <td><img class="foto" src="${employee.image}" alt="Foto de ${employee.name}"></td>
                 <td><h3>${employee.name}</h3></td>
@@ -75,37 +72,47 @@ document.addEventListener("DOMContentLoaded", () => {
                 </td>
             `;
 
-            // Adiciona a linha principal à tabela
+            // Adiciona as linhas à tabela
             tableBody.appendChild(row);
+            // Adiciona a linha collapse apenas no mobile
+            if (window.innerWidth <= 768) {
+                tableBody.appendChild(collapseRow);
+            }
 
+            // Lista de linhas collapse para manipulação posterior
+            const collapseRows = tableBody.querySelectorAll(".collapse");
+            
             // Função para gerenciar o collapse responsivo
             function handleResponsiveCollapse() {
                 const isMobile = window.innerWidth <= 768;
 
-                // Remove o collapse anterior se existir
-                const existingCollapse = document.getElementById(rowId);
-                if (existingCollapse) {
-                    existingCollapse.remove();
-                }
-
-                // Adiciona o collapse apenas no mobile
-                if (isMobile) {
-                    tableBody.appendChild(collapseRow);
-                    // Reassocia o comportamento de collapse do Bootstrap
-                    const collapseElement = new bootstrap.Collapse(collapseRow, {
-                        toggle: false
-                    });
-                    row.addEventListener("click", () => {
-                        collapseElement.toggle();
-                    });
-                }
+                collapseRows.forEach((collapse) => {
+                    if (isMobile) {
+                        // Garante que a linha collapse esteja na tabela
+                        if (!tableBody.contains(collapse)) {
+                            const relatedRow = tableBody.querySelector(`[data-bs-target="#${collapse.id}"]`);
+                            if (relatedRow) {
+                                relatedRow.insertAdjacentElement("afterend", collapse);
+                            }
+                        }
+                    } else {
+                        // Remove a linha collapse no desktop
+                        if (tableBody.contains(collapse)) {
+                            collapse.remove();
+                        }
+                    }
+                });
             }
 
             // Executa inicialmente
             handleResponsiveCollapse();
 
-            // Adiciona listener para redimensionamento da janela
-            window.addEventListener('resize', handleResponsiveCollapse);
+            // Adiciona listener para redimensionamento da janela (debounced para melhor desempenho)
+            let resizeTimeout;
+            window.addEventListener("resize", () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(handleResponsiveCollapse, 100);
+            });
         });
     }
 
@@ -124,11 +131,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (textContent.includes(filter)) {
                 row.style.display = "";
-                if (collapseRow) collapseRow.style.display = "";
+                if (collapseRow && window.innerWidth <= 768) {
+                    collapseRow.style.display = "";
+                }
                 hasVisibleRows = true;
             } else {
                 row.style.display = "none";
-                if (collapseRow) collapseRow.style.display = "none";
+                if (collapseRow) {
+                    collapseRow.style.display = "none";
+                }
             }
         });
 
